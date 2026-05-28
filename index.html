@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Interactiva: Gestión de Procesos - SENA</title>
+    <!-- Tailwind CSS para diseño moderno, responsive y adaptativo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilos personalizados para animaciones fluidas y accesibilidad */
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .progress-bar-fill { transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        /* Enfoque ultra-visible para accesibilidad de teclado (WCAG 2.4.7) */
+        *:focus-visible {
+            outline: 4px solid #f97316 !important;
+            outline-offset: 3px;
+        }
+
+        .bg-sena { background-color: #39A900; }
+        .text-sena { color: #39A900; }
+        .border-sena { border-color: #39A900; }
+        
+        /* Contenedor de video responsivo */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 1rem;
+        }
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-900 leading-normal min-h-screen flex flex-col">
+
+    <!-- Encabezado Principal y Seguimiento del Aprendiz -->
+    <header class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-sena rounded-xl flex items-center justify-center text-white font-extrabold text-xl shadow-md shadow-green-200" aria-hidden="true">S</div>
+                <div>
+                    <h1 class="text-lg font-black tracking-tight text-slate-800">Gestión de Procesos</h1>
+                    <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Centro de Formación SENA</p>
+                </div>
+            </div>
+            
+            <!-- Barra de Progreso Dinámica -->
+            <div class="w-full sm:w-64 bg-slate-100 rounded-full h-5 relative border border-slate-200 overflow-hidden" role="progressbar" id="progressContainer" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                <div id="progressBar" class="bg-sena h-full rounded-full progress-bar-fill w-0"></div>
+                <span id="progressText" class="absolute inset-0 flex items-center justify-center text-xs font-bold text-slate-700 mix-blend-multiply">Progreso: 0%</span>
+            </div>
+
+            <!-- Panel de Puntos Globales (Gamificación) -->
+            <div class="flex items-center gap-2 bg-amber-50 border border-amber-200 px-4 py-2 rounded-xl" aria-label="Puntaje acumulado">
+                <span class="text-amber-600" aria-hidden="true">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                </span>
+                <span class="text-xs font-extrabold text-amber-800 uppercase tracking-wider">Puntos:</span>
+                <span id="scoreDisplay" class="text-amber-900 font-black text-lg">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenedor Principal de la Sesión Interactiva -->
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full">
+        
+        <!-- MICRO 1: EL RETO Y EVALUACIÓN DIAGNÓSTICA -->
+        <section id="micro1" class="fade-in space-y-6" aria-labelledby="m1-title">
+            <div class="bg-white p-8 rounded-2xl shadow-xl border-t-8 border-orange-500">
+                <span class="inline-block px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-bold mb-4 uppercase tracking-wider">Micro 1 • Duración: 5 Min</span>
+                <h2 id="m1-title" class="text-3xl font-extrabold mb-4 text-slate-800">1. El Gran Desafío del Sector</h2>
+                
+                <div class="space-y-6">
+                    <p class="text-lg text-slate-600 italic leading-relaxed">
+                        "¿Sabías que el 70% de las fallas en la entrega de productos no se debe a la negligencia de los trabajadores, sino a procesos mal diseñados e inexistencia de estándares?"
+                    </p>
+
+                    <!-- Tarjeta del Desafío del Día -->
+                    <div class="bg-orange-50 border-l-4 border-orange-500 p-6 rounded-r-2xl shadow-sm" role="region" aria-label="Desafío del día">
+                        <h3 class="font-bold text-orange-800 text-lg mb-2 flex items-center gap-2">
+                            🚀 El Reto: Caso TechLogistic
+                        </h3>
+                        <p class="text-orange-950 text-base leading-relaxed">
+                            La compañía logística de alta tecnología <strong>"TechLogistic"</strong> ha registrado la deserción de 3 grandes clientes este mes debido a demoras sistemáticas en la entrega de sus mercancías. Tu misión como especialista es diagnosticar la raíz del problema mediante la gestión técnica de sus flujos de valor.
+                        </p>
+                    </div>
+
+                    <!-- IMAGEN TÉCNICA: INFOGRAFÍA ISO 9001 -->
+                    <div class="bg-slate-100 p-4 rounded-xl border border-slate-200">
+                        <figure class="w-full">
+                            <img 
+                                src="Infografia ISO 9001.png" 
+                                alt="Infografía Técnica sobre la Gestión por Procesos según la Norma ISO 9001:2015" 
+                                class="w-full h-auto rounded-lg shadow-md mx-auto"
+                                onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+                            >
+                            <!-- Respaldo de Accesibilidad si la imagen no está en la ruta local -->
+                            <div class="hidden p-8 text-center bg-white rounded-lg border border-slate-300">
+                                <svg class="w-12 h-12 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <p class="text-slate-600 font-bold">Esquema Técnico de Planificación ISO 9001</p>
+                                <p class="text-xs text-slate-400 mt-2">Ubicación del archivo físico: <code>Infografia ISO 9001.png</code></p>
+                            </div>
+                            <figcaption class="mt-3 text-center text-sm text-slate-500 italic">Figura 1: Estándares internacionales de calidad enfocados en la estructuración de procesos organizacionales.</figcaption>
+                        </figure>
+                    </div>
+
+                    <!-- EVALUACIÓN DIAGNÓSTICA (WCAG 2.5.3 y 4.1.3 compliant) -->
+                    <div class="bg-slate-100 p-6 rounded-2xl border border-slate-200" id="diagnosticArea">
+                        <h4 class="font-bold text-slate-800 text-lg mb-4">🩺 Evaluación Diagnóstica Inicial</h4>
+                        <p class="text-sm text-slate-500 mb-4">Esta actividad identifica tus saberes previos sobre la resolución de problemas cotidianos y organizacionales. No asigna puntos.</p>
+                        
+                        <fieldset>
+                            <!-- Leyenda explícita como nombre accesible (WCAG 2.5.3 / 1.3.1) -->
+                            <legend id="diagnosticLegend" class="font-semibold text-slate-700 text-base mb-4">
+                                Pregunta de Saberes Previos: Cuando preparas un plato complejo siguiendo una receta, ¿cuál consideras que es el factor más crucial para garantizar que el resultado siempre sea excelente y repetible?
+                            </legend>
+
+                            <div class="space-y-3">
+                                <label class="flex items-start gap-3 p-3 bg-white hover:bg-slate-50 rounded-xl border border-slate-200 cursor-pointer transition-colors">
+                                    <input type="radio" name="diagnosticOpt" value="A" class="mt-1 h-4 w-4 text-orange-600 border-slate-300 focus:ring-orange-500">
+                                    <span class="text-sm text-slate-700 font-medium">A) Tener suerte con los ingredientes y contar con inspiración ese día.</span>
+                                </label>
+                                <label class="flex items-start gap-3 p-3 bg-white hover:bg-slate-50 rounded-xl border border-slate-200 cursor-pointer transition-colors">
+                                    <input type="radio" name="diagnosticOpt" value="B" class="mt-1 h-4 w-4 text-orange-600 border-slate-300 focus:ring-orange-500">
+                                    <span class="text-sm text-slate-700 font-medium">B) Seguir paso a paso un método estructurado con cantidades, tiempos e interacciones claras de ingredientes.</span>
+                                </label>
+                                <label class="flex items-start gap-3 p-3 bg-white hover:bg-slate-50 rounded-xl border border-slate-200 cursor-pointer transition-colors">
+                                    <input type="radio" name="diagnosticOpt" value="C" class="mt-1 h-4 w-4 text-orange-600 border-slate-300 focus:ring-orange-500">
+                                    <span class="text-sm text-slate-700 font-medium">C) Comprar utensilios sumamente costosos para cocinar más rápido.</span>
+                                </label>
+                            </div>
+                        </fieldset>
+
+                        <div class="mt-4 flex flex-col sm:flex-row gap-4 items-center justify-between">
+                            <button onclick="submitDiagnostic()" id="btnSubmitDiagnostic" class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2.5 px-6 rounded-xl transition-all w-full sm:w-auto">
+                                Enviar Respuesta
+                            </button>
+                            <!-- Región accesible para anuncios de pantalla de estado sin alterar el foco (WCAG 4.1.3) -->
+                            <div id="diagnosticStatus" class="text-sm font-semibold text-slate-600" role="status" aria-live="polite"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón de Navegación -->
+                <div class="mt-8 flex justify-end">
+                    <button id="btnGotoMicro2" disabled onclick="navigate('micro2', 25)" class="bg-slate-300 text-slate-500 cursor-not-allowed font-bold py-3 px-8 rounded-lg transition-all flex items-center gap-2">
+                        Aceptar el Reto e Ir al Contenido
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MICRO 2: EL CONTENIDO Y EVALUACIÓN FORMATIVA -->
+        <section id="micro2" class="hidden fade-in space-y-6" aria-labelledby="m2-title">
+            <div class="bg-white p-8 rounded-2xl shadow-xl border-t-8 border-blue-500">
+                <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold mb-4 uppercase tracking-wider">Micro 2 • Duración: 10 Min</span>
+                
+                <header class="mb-6">
+                    <h2 id="m2-title" class="text-3xl font-extrabold text-slate-800 mb-2">2. ADN de la Gestión por Procesos</h2>
+                    <p class="text-slate-600 font-medium">Competencia Técnica: Planificar los sistemas de gestión según el marco estratégico (Código SENA: 210001004).</p>
+                </header>
+
+                <!-- VIDEO FORMATIVO INTERACTIVO -->
+                <div class="mb-8 space-y-3">
+                    <div class="video-container shadow-2xl">
+                        <video controls poster="https://placehold.co/800x450/39A900/FFFFFF?text=Video+ISO+9001">
+                            <source src="Videos\Video ISO 9001 sub.mp4" type="video/mp4">
+                            Tu navegador no soporta la reproducción de videos locales.
+                        </video>
+                    </div>
+                    <div class="flex items-center gap-3 text-blue-700 bg-blue-50 p-4 rounded-xl border border-blue-100">
+                        <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <p class="text-sm font-medium">Observa detalladamente este video con subtítulos integrados sobre la norma técnica colombiana NTC ISO 9001 antes de abordar la teoría.</p>
+                    </div>
+                </div>
+
+                <!-- Bloques Segmentados de Teoría (Tabs Accesibles) -->
+                <div class="border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                    <div class="flex bg-slate-100 border-b border-slate-200" role="tablist" aria-label="Segmentos formativos">
+                        <button onclick="showTab('tab1')" id="btnTab1" class="flex-1 py-4 px-2 font-bold text-sm sm:text-base border-b-4 border-blue-600 bg-white text-blue-700" role="tab" aria-selected="true" aria-controls="tab1">1. ¿Qué es un Proceso?</button>
+                        <button onclick="showTab('tab2')" id="btnTab2" class="flex-1 py-4 px-2 font-bold text-sm sm:text-base border-b-4 border-transparent text-slate-600 hover:bg-slate-200" role="tab" aria-selected="false" aria-controls="tab2">2. Entradas y Salidas</button>
+                        <button onclick="showTab('tab3')" id="btnTab3" class="flex-1 py-4 px-2 font-bold text-sm sm:text-base border-b-4 border-transparent text-slate-600 hover:bg-slate-200" role="tab" aria-selected="false" aria-controls="tab3">3. El Ciclo PHVA</button>
+                    </div>
+
+                    <div class="p-6 bg-white">
+                        <div id="tab1" class="tab-content block fade-in" role="tabpanel" aria-labelledby="btnTab1">
+                            <h4 class="text-xl font-bold text-blue-700 mb-2">Fundamento Técnico</h4>
+                            <p class="text-slate-700 leading-relaxed">
+                                De acuerdo con el programa <strong>"SENA ISO 9001 Quality Management Planning Training Program"</strong>, un proceso se define como un conjunto de actividades mutuamente relacionadas que interactúan para transformar elementos de entrada en resultados con el fin de generar valor real para la organización y el cliente.
+                            </p>
+                        </div>
+
+                        <div id="tab2" class="tab-content hidden fade-in" role="tabpanel" aria-labelledby="btnTab2">
+                            <h4 class="text-xl font-bold text-blue-700 mb-2">Modelo de Interacción Técnica</h4>
+                            <p class="text-slate-700 leading-relaxed mb-4">
+                                Ningún proceso opera aislado. Se estructuran a través de elementos definidos:
+                            </p>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                                <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                                    <span class="block font-black text-blue-800 text-sm tracking-wider uppercase">Entradas</span>
+                                    <span class="text-xs text-slate-600 mt-1 block">Insumos, información o requisitos del cliente.</span>
+                                </div>
+                                <div class="bg-blue-600 p-4 rounded-xl text-white font-extrabold flex items-center justify-center">
+                                    ACTIVIDADES DE TRANSFORMACIÓN
+                                </div>
+                                <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                                    <span class="block font-black text-blue-800 text-sm tracking-wider uppercase">Salidas</span>
+                                    <span class="text-xs text-slate-600 mt-1 block">Resultados con valor agregado que satisfacen requisitos.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="tab3" class="tab-content hidden fade-in" role="tabpanel" aria-labelledby="btnTab3">
+                            <h4 class="text-xl font-bold text-blue-700 mb-2">El Ciclo de Deming (PHVA)</h4>
+                            <p class="text-slate-700 leading-relaxed mb-4">
+                                Para planificar y optimizar de manera continua cualquier SGC (Sistema de Gestión de la Calidad) bajo la norma ISO 9001, implementamos la metodología sistemática del PHVA:
+                            </p>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-3"><span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">P</span> <p class="text-sm text-slate-700"><strong>Planear:</strong> Definir los objetivos operacionales y diseñar las metodologías de control.</p></div>
+                                <div class="flex items-start gap-3"><span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">H</span> <p class="text-sm text-slate-700"><strong>Hacer:</strong> Llevar a cabo el proceso de acuerdo con las especificaciones planificadas.</p></div>
+                                <div class="flex items-start gap-3"><span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">V</span> <p class="text-sm text-slate-700"><strong>Verificar:</strong> Medir los resultados del proceso frente a los estándares y metas.</p></div>
+                                <div class="flex items-start gap-3"><span class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs flex-shrink-0">A</span> <p class="text-sm text-slate-700"><strong>Actuar:</strong> Tomar medidas técnicas correctivas para subsanar desviaciones y optimizar.</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GAGNÉ: Evaluación Formativa Integrada -->
+                <div class="bg-slate-100 p-6 rounded-2xl border border-slate-200 mt-8">
+                    <h3 class="font-bold text-slate-800 text-lg mb-4">📝 Evaluación Formativa</h3>
+                    <p class="text-sm text-slate-500 mb-6">Responde las preguntas para verificar tu comprensión de la teoría. Se evalúa con retroalimentación inmediata e informe de estado.</p>
+                    
+                    <div id="formativeQuizContainer" class="space-y-6">
+                        <!-- Pregunta Formativa 1 -->
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+                            <fieldset>
+                                <legend class="font-bold text-slate-700 mb-3 text-sm sm:text-base">1. ¿Qué norma internacional estandariza los requisitos técnicos para implementar un SGC de excelencia?</legend>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                    <button onclick="answerFormative(1, 'A')" id="f-1-A" class="formative-opt p-3 border rounded-lg text-xs sm:text-sm font-semibold hover:bg-slate-50 transition-all text-left">A) ISO 14001</button>
+                                    <button onclick="answerFormative(1, 'B')" id="f-1-B" class="formative-opt p-3 border rounded-lg text-xs sm:text-sm font-semibold hover:bg-slate-50 transition-all text-left">B) ISO 9001:2015</button>
+                                    <button onclick="answerFormative(1, 'C')" id="f-1-C" class="formative-opt p-3 border rounded-lg text-xs sm:text-sm font-semibold hover:bg-slate-50 transition-all text-left">C) ISO 45001</button>
+                                </div>
+                            </fieldset>
+                            <div id="f-feedback-1" class="mt-3 hidden text-xs sm:text-sm font-semibold p-3 rounded-lg" role="alert"></div>
+                        </div>
+
+                        <!-- Pregunta Formativa 2 -->
+                        <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+                            <fieldset>
+                                <legend class="font-bold text-slate-700 mb-3 text-sm sm:text-base">2. Si estás midiendo la efectividad de las operaciones en TechLogistic, ¿en qué etapa del ciclo PHVA te encuentras?</legend>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                    <button onclick="answerFormative(2, 'A')" id="f-2-A" class="formative-opt p-3 border rounded-lg text-xs sm:text-sm font-semibold hover:bg-slate-50 transition-all text-left">A) Planear (P)</button>
+                                    <button onclick="answerFormative(2, 'B')" id="f-2-B" class="formative-opt p-3 border rounded-lg text-xs sm:text-sm font-semibold hover:bg-slate-50 transition-all text-left">B) Hacer (H)</button>
+                                    <button onclick="answerFormative(2, 'C')" id="f-2-C" class="formative-opt p-3 border rounded-lg text-xs sm:text-sm font-semibold hover:bg-slate-50 transition-all text-left">C) Verificar (V)</button>
+                                </div>
+                            </fieldset>
+                            <div id="f-feedback-2" class="mt-3 hidden text-xs sm:text-sm font-semibold p-3 rounded-lg" role="alert"></div>
+                        </div>
+                    </div>
+
+                    <!-- Mensaje de Estado Accesible (WCAG 4.1.3) -->
+                    <div id="formativeStatus" class="mt-4 p-3 bg-blue-50 text-blue-800 text-xs sm:text-sm rounded-lg font-bold flex items-center gap-2" role="status" aria-live="polite">
+                        <span>ℹ️ Estado:</span> Esperando respuestas...
+                    </div>
+
+                    <!-- Pantalla de Resumen Diferido y Acciones de Refuerzo -->
+                    <div id="deferredFeedback" class="hidden bg-slate-50 border-2 border-dashed border-slate-300 p-6 rounded-xl mt-6">
+                        <h4 class="font-bold text-slate-800 text-lg mb-3">📋 Resumen de Desempeño Formativo</h4>
+                        <p class="text-sm text-slate-600 mb-4" id="deferredSummaryText"></p>
+                        
+                        <div id="reinforcementArea" class="space-y-3">
+                            <!-- Las sugerencias de refuerzo dinámicas se inyectarán aquí -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 flex justify-between">
+                    <button onclick="navigate('micro1', 0)" class="text-slate-500 font-bold py-3 px-6 hover:underline">Volver al Reto</button>
+                    <button id="btnGotoMicro3" disabled onclick="navigate('micro3', 60)" class="bg-slate-300 text-slate-500 cursor-not-allowed font-bold py-3 px-8 rounded-lg transition-all">
+                        Continuar al Micro 3
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MICRO 3: LA APLICACIÓN Y TOMA DE DECISIONES -->
+        <section id="micro3" class="hidden fade-in space-y-6" aria-labelledby="m3-title">
+            <div class="bg-white p-8 rounded-2xl shadow-xl border-t-8 border-purple-500">
+                <span class="inline-block px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold mb-4 uppercase tracking-wider">Micro 3 • Duración: 10 Min</span>
+                <h2 id="m3-title" class="text-3xl font-extrabold text-slate-800 mb-4">3. Toma de Decisiones: Solución de Cuello de Botella</h2>
+                
+                <div class="bg-purple-50 border-l-4 border-purple-500 p-5 rounded-r-xl mb-6">
+                    <p class="text-purple-950 font-medium">
+                        <strong>Escenario de Práctica:</strong> Como especialista en calidad del SENA para TechLogistic, has identificado que el cuello de botella se produce porque las órdenes de empaque se retrasan al esperar validación del supervisor. Los operarios están parados esperando instrucciones escritas sin estándares automatizados.
+                    </p>
+                </div>
+
+                <!-- Cuestionario de Toma de Decisiones Técnicas (Gamificación) -->
+                <div id="situationalQuiz" class="space-y-6">
+                    <!-- Escenario 1 de Toma de Decisiones -->
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                        <fieldset>
+                            <legend class="font-bold text-slate-800 text-base mb-4">
+                                Decisión 1: Para estabilizar el proceso de empaque y mitigar las demoras de validación, ¿cuál de las siguientes acciones operacionales es la más óptima?
+                            </legend>
+
+                            <div class="space-y-3">
+                                <button onclick="answerSituational(1, 'A')" id="s-1-A" class="situational-opt w-full p-4 bg-white hover:bg-slate-100 border border-slate-300 text-left rounded-xl transition-all text-sm font-semibold text-slate-700 block">
+                                    A) Ordenar que los operarios decidan autónomamente el tipo de embalaje sin realizar mediciones ni estandarizar sus actividades.
+                                </button>
+                                <button onclick="answerSituational(1, 'B')" id="s-1-B" class="situational-opt w-full p-4 bg-white hover:bg-slate-100 border border-slate-300 text-left rounded-xl transition-all text-sm font-semibold text-slate-700 block">
+                                    B) Diseñar una caracterización de procesos que defina la salida de compras (especificaciones técnicas de embalaje) como entrada directa del proceso de empaque, estandarizando la instrucción técnica de ensamble.
+                                </button>
+                                <button onclick="answerSituational(1, 'C')" id="s-1-C" class="situational-opt w-full p-4 bg-white hover:bg-slate-100 border border-slate-300 text-left rounded-xl transition-all text-sm font-semibold text-slate-700 block">
+                                    C) Detener completamente los envíos de la empresa hasta adquirir una costosa herramienta de Inteligencia Artificial para el almacén.
+                                </button>
+                            </div>
+                        </fieldset>
+                        <div id="s-feedback-1" class="mt-4 hidden text-sm font-medium p-4 rounded-xl" role="alert"></div>
+                    </div>
+
+                    <!-- Escenario 2 de Toma de Decisiones -->
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                        <fieldset>
+                            <legend class="font-bold text-slate-800 text-base mb-4">
+                                Decisión 2: Tras estandarizar la entrada y las actividades del proceso de empaque, ¿cómo implementas técnicamente la fase de "Verificar" (V) en TechLogistic según los requerimientos del programa "SENA ISO 9001"?
+                            </legend>
+
+                            <div class="space-y-3">
+                                <button onclick="answerSituational(2, 'A')" id="s-2-A" class="situational-opt w-full p-4 bg-white hover:bg-slate-100 border border-slate-300 text-left rounded-xl transition-all text-sm font-semibold text-slate-700 block">
+                                    A) Implementar un Indicador de Rendimiento (KPI) diario que mida la tasa de despachos a tiempo (OTIF) y realizar un control de no conformidades antes de la distribución.
+                                </button>
+                                <button onclick="answerSituational(2, 'B')" id="s-2-B" class="situational-opt w-full p-4 bg-white hover:bg-slate-100 border border-slate-300 text-left rounded-xl transition-all text-sm font-semibold text-slate-700 block">
+                                    B) Esperar 3 meses para analizar si disminuyen las quejas de los clientes en redes sociales.
+                                </button>
+                                <button onclick="answerSituational(2, 'C')" id="s-2-C" class="situational-opt w-full p-4 bg-white hover:bg-slate-100 border border-slate-300 text-left rounded-xl transition-all text-sm font-semibold text-slate-700 block">
+                                    C) Eliminar el control de no conformidades para acelerar el empaque, asumiendo que los operarios ya no cometerán errores.
+                                </button>
+                            </div>
+                        </fieldset>
+                        <div id="s-feedback-2" class="mt-4 hidden text-sm font-medium p-4 rounded-xl" role="alert"></div>
+                    </div>
+                </div>
+
+                <!-- Mensaje de Estado Accesible para Micro 3 (WCAG 4.1.3) -->
+                <div id="situationalStatus" class="mt-4 p-3 bg-purple-50 text-purple-800 text-sm rounded-lg font-bold flex items-center gap-2" role="status" aria-live="polite">
+                    <span>ℹ️ Estado Operativo:</span> Esperando decisiones técnicas de calidad...
+                </div>
+
+                <div class="mt-8 flex justify-between">
+                    <button onclick="navigate('micro2', 25)" class="text-slate-500 font-bold py-3 px-6 hover:underline">Volver a Teoría</button>
+                    <button id="btnFinishSess" disabled onclick="showFinalResults()" class="bg-slate-300 text-slate-500 cursor-not-allowed font-bold py-3 px-8 rounded-lg transition-all">
+                        Evaluar Resultados Finales
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- MICRO 4: RESULTADO Y GAMIFICACIÓN (INSIGNIAS) -->
+        <section id="micro4" class="hidden fade-in space-y-6" aria-labelledby="m4-title">
+            <div class="bg-white p-8 rounded-2xl shadow-xl border-t-8 border-sena text-center">
+                <span class="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold mb-4 uppercase tracking-wider">Certificación • Logro Máximo</span>
+                <h2 id="m4-title" class="text-4xl font-extrabold text-slate-800 mb-2">¡Misión Cumplida, Aprendiz!</h2>
+                <p class="text-slate-600 text-lg mb-8 max-w-lg mx-auto">Has completado con éxito la sesión de 30 minutos sobre Gestión de Procesos bajo la norma ISO 9001.</p>
+
+                <!-- Tarjeta del Puntaje Total -->
+                <div class="max-w-md mx-auto bg-slate-50 p-6 rounded-2xl border border-slate-200 mb-8">
+                    <h3 class="text-slate-500 uppercase tracking-wider font-bold text-xs mb-1">Puntuación de Calidad Obtenida</h3>
+                    <div class="text-5xl font-black text-sena" id="finalPoints">0 / 100</div>
+                    <p class="text-slate-500 text-xs mt-2" id="scoreEvaluation">Completando todos los objetivos para el SGC.</p>
+                </div>
+
+                <!-- Botón para Reclamar Insignia -->
+                <div class="space-y-4">
+                    <button id="btnInsignia" onclick="triggerInsignia()" class="bg-amber-500 hover:bg-amber-600 text-white font-extrabold py-4 px-10 rounded-2xl shadow-lg shadow-amber-100 transition-all text-lg tracking-wide inline-flex items-center gap-2">
+                        ⭐ Reclamar Insignia Técnica
+                    </button>
+                    <div>
+                        <button onclick="restartCourse()" class="text-xs font-bold text-blue-600 hover:underline">Reiniciar el curso completo</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- MODAL ACCESIBLE DE INSIGNIA DIGITAL (Gamificación / WCAG Compliant) -->
+    <div id="badgeModal" class="hidden fixed inset-0 z-50 bg-slate-900 bg-opacity-80 flex items-center justify-center p-4 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl scale-in transform transition-all border border-amber-200">
+            <!-- Icono de Insignia Técnica -->
+            <div class="w-32 h-32 bg-amber-400 mx-auto rounded-full flex items-center justify-center border-8 border-amber-100 mb-6 shadow-inner animate-bounce">
+                <svg class="w-16 h-16 text-amber-800" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+            </div>
+            
+            <h2 id="modalTitle" class="text-2xl font-black text-slate-800">¡Logro Desbloqueado!</h2>
+            <p id="modalDesc" class="text-slate-600 mt-2 mb-6 font-medium">Insignia Oficial de <strong>Experto en Gestión y Caracterización de Procesos</strong></p>
+            
+            <div class="bg-slate-50 p-3 rounded-lg text-xs text-slate-500 mb-6 border border-slate-100 text-left">
+                El SENA otorga este reconocimiento por culminar y resolver los problemas operacionales de la sesión práctica con excelente nivel.
+            </div>
+
+            <button onclick="closeModal()" class="w-full bg-sena text-white font-extrabold py-3.5 rounded-xl shadow-lg shadow-green-100 hover:bg-green-700 transition-colors">
+                Regresar al Panel
+            </button>
+        </div>
+    </div>
+
+    <!-- Pie de página Institucional -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 font-medium">
+        <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <p>© 2026 Servicio Nacional de Aprendizaje SENA. Todos los derechos reservados.</p>
+            <p class="text-slate-400">Modelo Instruccional Robert Gagné / Adaptaciones WCAG 2.1</p>
+        </div>
+    </footer>
+
+    <!-- Lógica Técnica de Programación (JavaScript) -->
+    <script>
+        // Variables de Control del Estado Global de Aprendizaje
+        let globalScore = 0;
+        let diagnosticCompleted = false;
+        
+        // Formative answers state
+        let formativeResults = {
+            1: { answered: false, correct: false },
+            2: { answered: false, correct: false }
+        };
+        const formativeKeys = {
+            1: 'B', // ISO 9001:2015
+            2: 'C'  // Verificar (V)
+        };
+
+        // Situational answers state
+        let situationalResults = {
+            1: { answered: false, score: 0 },
+            2: { answered: false, score: 0 }
+        };
+        const situationalScores = {
+            1: { 'A': -10, 'B': 20, 'C': -5 },
+            2: { 'A': 20, 'B': -10, 'C': -5 }
+        };
+
+        // --- NAVEGACIÓN ---
+        function navigate(sectionId, targetProgress) {
+            document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+            document.getElementById(sectionId).classList.remove('hidden');
+            updateProgress(targetProgress);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateProgress(value) {
+            const bar = document.getElementById('progressBar');
+            const txt = document.getElementById('progressText');
+            bar.style.width = value + '%';
+            txt.innerText = 'Progreso: ' + value + '%';
+            document.getElementById('progressContainer').setAttribute('aria-valuenow', value);
+        }
+
+        // --- MICRO 1: EVALUACIÓN DIAGNÓSTICA ---
+        function submitDiagnostic() {
+            const selectedOpt = document.querySelector('input[name="diagnosticOpt"]:checked');
+            const statusDiv = document.getElementById('diagnosticStatus');
+
+            if (!selectedOpt) {
+                statusDiv.innerHTML = "⚠️ Por favor, selecciona una opción antes de enviar.";
+                return;
+            }
+
+            diagnosticCompleted = true;
+            statusDiv.innerHTML = "✅ Respuesta enviada correctamente. ¡Muchas gracias por tu participación!";
+            
+            // Habilitar botón para el siguiente paso
+            const nextBtn = document.getElementById('btnGotoMicro2');
+            nextBtn.removeAttribute('disabled');
+            nextBtn.classList.remove('bg-slate-300', 'text-slate-500', 'cursor-not-allowed');
+            nextBtn.classList.add('bg-sena', 'text-white', 'hover:bg-green-700');
+
+            // Deshabilitar el botón de envío y inputs
+            document.getElementById('btnSubmitDiagnostic').disabled = true;
+            document.getElementById('btnSubmitDiagnostic').classList.add('opacity-50', 'cursor-not-allowed');
+            document.querySelectorAll('input[name="diagnosticOpt"]').forEach(i => i.disabled = true);
+        }
+
+        // --- TABS (MICRO 2) ---
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            document.querySelectorAll('[role="tab"]').forEach(b => {
+                b.classList.remove('bg-white', 'border-blue-600', 'text-blue-700');
+                b.classList.add('border-transparent', 'text-slate-600', 'hover:bg-slate-200');
+                b.setAttribute('aria-selected', 'false');
+            });
+            
+            const activeBtn = document.querySelector(`[aria-controls="${tabId}"]`);
+            activeBtn.classList.add('bg-white', 'border-blue-600', 'text-blue-700');
+            activeBtn.classList.remove('border-transparent', 'text-slate-600', 'hover:bg-slate-200');
+            activeBtn.setAttribute('aria-selected', 'true');
+        }
+
+        // --- MICRO 2: EVALUACIÓN FORMATIVA ---
+        function answerFormative(qNum, opt) {
+            if (formativeResults[qNum].answered) return; // Evitar re-sometimiento inmediato
+
+            const isCorrect = (opt === formativeKeys[qNum]);
+            formativeResults[qNum].answered = true;
+            formativeResults[qNum].correct = isCorrect;
+
+            // Retroalimentación de Puntos de Estado (Acierto/Error inmediato)
+            const feedbackBox = document.getElementById(`f-feedback-${qNum}`);
+            feedbackBox.classList.remove('hidden');
+
+            // Deshabilitar los botones correspondientes
+            ['A', 'B', 'C'].forEach(o => {
+                const btn = document.getElementById(`f-${qNum}-${o}`);
+                btn.disabled = true;
+                btn.classList.add('opacity-40', 'cursor-not-allowed');
+                if (o === opt) {
+                    btn.classList.remove('opacity-40');
+                    btn.classList.add(isCorrect ? 'bg-green-100' : 'bg-red-100', isCorrect ? 'border-green-500' : 'border-red-500');
+                }
+            });
+
+            // Enunciar estado de validación (WCAG 4.1.3)
+            const statusDiv = document.getElementById('formativeStatus');
+            statusDiv.innerHTML = `<span>✅ Estado:</span> Respuesta ${qNum} procesada e informada.`;
+
+            if (isCorrect) {
+                globalScore += 20;
+                updateScoreDisplay();
+                feedbackBox.innerHTML = `🟢 Correcto. ¡Excelente! Has identificado el concepto de manera acertada.`;
+                feedbackBox.className = "mt-3 text-xs sm:text-sm font-semibold p-3 rounded-lg bg-green-50 text-green-800 border border-green-200";
+            } else {
+                feedbackBox.innerHTML = `🔴 Incorrecto. Pista: Revisa la norma principal de aseguramiento y las fases de control.`;
+                feedbackBox.className = "mt-3 text-xs sm:text-sm font-semibold p-3 rounded-lg bg-red-50 text-red-800 border border-red-200";
+            }
+
+            checkFormativeCompletion();
+        }
+
+        function checkFormativeCompletion() {
+            if (formativeResults[1].answered && formativeResults[2].answered) {
+                // Habilitar siguiente sección
+                const nextBtn = document.getElementById('btnGotoMicro3');
+                nextBtn.removeAttribute('disabled');
+                nextBtn.classList.remove('bg-slate-300', 'text-slate-500', 'cursor-not-allowed');
+                nextBtn.classList.add('bg-sena', 'text-white', 'hover:bg-green-700');
+
+                // Mostrar Retroalimentación Diferida y Sugerencias de Refuerzo
+                const defSection = document.getElementById('deferredFeedback');
+                const defText = document.getElementById('deferredSummaryText');
+                const reArea = document.getElementById('reinforcementArea');
+                
+                defSection.classList.remove('hidden');
+                
+                let corrects = 0;
+                if (formativeResults[1].correct) corrects++;
+                if (formativeResults[2].correct) corrects++;
+
+                defText.innerHTML = `Has respondido las dos preguntas formativas obteniendo <strong>${corrects} de 2 correctas</strong>. Aquí tienes la guía de refuerzo adaptativa según tus respuestas:`;
+
+                let reContent = '';
+                if (!formativeResults[1].correct) {
+                    reContent += `
+                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
+                            <h5 class="font-bold text-amber-800 text-sm">Refuerzo: Fundamento de Normativa Técnica</h5>
+                            <p class="text-xs text-amber-900 mt-1">Te sugerimos revisar la documentación específica de la norma ISO 9001:2015 en el programa formativo <em>"SENA ISO 9001 Quality Management Planning Training Program"</em> para entender la estructura de alto nivel del SGC.</p>
+                        </div>
+                    `;
+                }
+                if (!formativeResults[2].correct) {
+                    reContent += `
+                        <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
+                            <h5 class="font-bold text-amber-800 text-sm">Refuerzo: El Ciclo de Mejora PHVA</h5>
+                            <p class="text-xs text-amber-900 mt-1">Recuerda que la medición de resultados y KPI se ubica exclusivamente dentro de la etapa de "Verificar" (V). Te sugerimos repasar la Pestaña 3 en esta pantalla.</p>
+                        </div>
+                    `;
+                }
+                if (corrects === 2) {
+                    reContent += `
+                        <div class="bg-green-50 p-4 rounded-xl border border-green-200">
+                            <h5 class="font-bold text-green-800 text-sm">¡Desempeño Excelente!</h5>
+                            <p class="text-xs text-green-900 mt-1">Demuestras una gran asimilación de la teoría técnica para SGC. Estás listo para tomar decisiones avanzadas en la simulación de TechLogistic.</p>
+                        </div>
+                    `;
+                }
+                reArea.innerHTML = reContent;
+            }
+        }
+
+        // --- MICRO 3: APLICACIÓN Y TOMA DE DECISIONES ---
+        function answerSituational(sNum, opt) {
+            if (situationalResults[sNum].answered) return;
+
+            const obtainedScore = situationalScores[sNum][opt] || 0;
+            situationalResults[sNum].answered = true;
+            situationalResults[sNum].score = obtainedScore;
+
+            globalScore += obtainedScore;
+            updateScoreDisplay();
+
+            // Retroalimentación de los botones
+            ['A', 'B', 'C'].forEach(o => {
+                const btn = document.getElementById(`s-${sNum}-${o}`);
+                btn.disabled = true;
+                btn.classList.add('opacity-40', 'cursor-not-allowed');
+                if (o === opt) {
+                    btn.classList.remove('opacity-40');
+                    btn.classList.add(obtainedScore > 0 ? 'bg-green-100' : 'bg-red-100', obtainedScore > 0 ? 'border-green-500' : 'border-red-500');
+                }
+            });
+
+            // Enunciar Estado Operativo de la Simulación (WCAG 4.1.3)
+            const statusDiv = document.getElementById('situationalStatus');
+            statusDiv.innerHTML = `<span>⚡ Estado:</span> Decisión ${sNum} ejecutada. Afectación de puntos: ${obtainedScore > 0 ? '+' : ''}${obtainedScore}.`;
+
+            // Mostrar el cuadro de feedback con explicación lógica y adaptativa
+            const feedbackBox = document.getElementById(`s-feedback-${sNum}`);
+            feedbackBox.classList.remove('hidden');
+
+            if (obtainedScore > 0) {
+                feedbackBox.innerHTML = `🟢 <strong>¡Excelente decisión operativa!</strong> El flujo de procesos es sólido y predecible. Estandarizar inputs y outputs reduce dramáticamente la incertidumbre en empaque. (+20 Puntos)`;
+                feedbackBox.className = "mt-4 p-4 rounded-xl bg-green-50 text-green-800 border border-green-200 text-sm font-semibold";
+            } else {
+                feedbackBox.innerHTML = `🔴 <strong>Decisión ineficiente.</strong> Un SGC efectivo no busca culpables individuales ni frena operaciones innecesariamente, sino que reestructura la interacción de las caracterizaciones operacionales. (${obtainedScore} Puntos)`;
+                feedbackBox.className = "mt-4 p-4 rounded-xl bg-red-50 text-red-800 border border-red-200 text-sm font-semibold";
+            }
+
+            checkSituationalCompletion();
+        }
+
+        function checkSituationalCompletion() {
+            if (situationalResults[1].answered && situationalResults[2].answered) {
+                // Habilitar botón final
+                const finishBtn = document.getElementById('btnFinishSess');
+                finishBtn.removeAttribute('disabled');
+                finishBtn.classList.remove('bg-slate-300', 'text-slate-500', 'cursor-not-allowed');
+                finishBtn.classList.add('bg-sena', 'text-white', 'hover:bg-green-700');
+            }
+        }
+
+        // --- SISTEMA DE PUNTOS GLOBAL ---
+        function updateScoreDisplay() {
+            document.getElementById('scoreDisplay').innerText = globalScore;
+        }
+
+        // --- RESULTADO FINAL ---
+        function showFinalResults() {
+            navigate('micro4', 100);
+            document.getElementById('finalPoints').innerText = globalScore + ' / 100';
+
+            const scoreEvaluation = document.getElementById('scoreEvaluation');
+            if (globalScore >= 60) {
+                scoreEvaluation.innerHTML = "¡Felicitaciones! Has aprobado con un nivel sobresaliente para la toma de decisiones del SGC.";
+            } else {
+                scoreEvaluation.innerHTML = "Has completado la sesión, pero te recomendamos reiniciar la guía para optimizar tus decisiones y conseguir un mayor puntaje de calidad.";
+            }
+        }
+
+        // --- GAMIFICACIÓN: INSIGNIAS ---
+        function triggerInsignia() {
+            if (globalScore < 40) {
+                alert("Debes acumular al menos 40 puntos para reclamar la insignia de competencia técnica.");
+                return;
+            }
+            document.getElementById('badgeModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('badgeModal').classList.add('hidden');
+        }
+
+        // --- REINICIAR EXPERIENCIA ---
+        function restartCourse() {
+            globalScore = 0;
+            diagnosticCompleted = false;
+            
+            formativeResults = {
+                1: { answered: false, correct: false },
+                2: { answered: false, correct: false }
+            };
+
+            situationalResults = {
+                1: { answered: false, score: 0 },
+                2: { answered: false, score: 0 }
+            };
+
+            updateScoreDisplay();
+            location.reload();
+        }
+    </script>
+</body>
+</html>
